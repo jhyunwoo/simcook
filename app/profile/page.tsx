@@ -63,6 +63,7 @@ export default function Profile(): ReactElement {
       </fieldset>
 
       {/* 질병 선택 */}
+<<<<<<< Updated upstream
       <fieldset>
         <legend>질병</legend>
         <ul>
@@ -80,6 +81,47 @@ export default function Profile(): ReactElement {
           ))}
         </ul>
       </fieldset>
+=======
+      <div className={"p-2 bg-white rounded-xl flex justify-between"}>
+        <div className={"text-lg font-semibold"}>당뇨</div>
+        <label className="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isDiabetes}
+            onChange={toggleDiabetes}
+          />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
+      </div>
+      <div className={"p-2 bg-white rounded-xl flex justify-between"}>
+        <div className={"text-lg font-semibold"}>고혈압</div>
+        <label className="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isHBP}
+            onChange={toggleHBP}
+          />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
+      </div>
+      <div className={"p-2 bg-white rounded-xl flex justify-between"}>
+        <div className={"text-lg font-semibold"}>고지혈증</div>
+        <label className="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isHyperlipidemia}
+            onChange={toggleHyperlipidemia}
+          />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
+      </div>
+      <div className="pb-8 bg-gray-200 rounded-xl flex justify-between">
+        하루 영양소
+      </div>
+>>>>>>> Stashed changes
     </div>
   );
 }
