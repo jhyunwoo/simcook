@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+
 import SearchForm from "@/app/search-form";
 import Link from "next/link";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
