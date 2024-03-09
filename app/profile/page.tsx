@@ -1,7 +1,9 @@
 "use client";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import { pb } from "@/lib/pocketbase";
 
 const diseasesList = ["당뇨", "고혈압", "고지혈증"];
 export default function Profile(): ReactElement {
@@ -11,6 +13,8 @@ export default function Profile(): ReactElement {
   const [isLowsalt, setIsLowsalt] = useState(false);
   const [selectedReligion, setSelectedReligion] = useState("");
   const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
+
+  const router = useRouter();
 
   // 채식 토글 함수
   const toggleVegetarian = () => {
@@ -38,6 +42,12 @@ export default function Profile(): ReactElement {
       setSelectedDiseases([...selectedDiseases, disease]);
     }
   };
+
+  useEffect(() => {
+    if (!pb.authStore.isValid) {
+      router.push("/auth/signin");
+    }
+  }, [router]);
 
   return (
     <div className="w-full min-h-screen flex justify-start flex-col p-4 space-y-2">
