@@ -11,6 +11,11 @@ export default function Recipe({
   params: { cookId: string };
 }): ReactElement {
   const [recipe, setRecipe] = useState<any>();
+  const [option, setOption] = useState<"basic" | "custom">("basic");
+
+  function handleOption() {
+    setOption(option === "basic" ? "custom" : "basic");
+  }
 
   useEffect(() => {
     async function getCookRecipe() {
@@ -27,6 +32,22 @@ export default function Recipe({
         <div className={"group-hover:underline"}>홈</div>
       </Link>
       <div className={"text-2xl font-bold"}>{recipe?.foodName}</div>
+      <div className={"flex w-full justify-end space-x-2"}>
+        <button
+          type={"button"}
+          onClick={handleOption}
+          className={`${option === "basic" ? "bg-rose-500 text-white" : ""} p-1 px-2 rounded-lg`}
+        >
+          기본 설정
+        </button>
+        <button
+          type={"button"}
+          onClick={handleOption}
+          className={`${option === "custom" ? "bg-rose-500 text-white" : ""} p-1 px-2 rounded-lg`}
+        >
+          커스텀
+        </button>
+      </div>
       <div>난이도: {recipe?.difficulty}/5</div>
       <div>
         {recipe?.tools?.map((data: any, index: number) => (
