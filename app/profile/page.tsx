@@ -10,9 +10,10 @@ export default function Profile(): ReactElement {
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [isHalal, setIsHalal] = useState(false);
   const [isHindu, setIsHindu] = useState(false);
-  const [isLowsalt, setIsLowsalt] = useState(false);
-  const [selectedReligion, setSelectedReligion] = useState("");
-  const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
+  const [isLowSalt, setIsLowSalt] = useState(false);
+  const [isDiabetes, setIsDiabetes] = useState(false);
+  const [isHBP, setIsHBP] = useState(false);
+  const [isHyperlipidemia, setIsHyperlipidemia] = useState(false);
 
   const router = useRouter();
 
@@ -26,27 +27,62 @@ export default function Profile(): ReactElement {
   const toggleHindu = () => {
     setIsHindu(!isHindu);
   };
-  const toggleLowsalt = () => {
-    setIsLowsalt(!isLowsalt);
-  };
-  // 종교 선택 함수
-  const handleReligionSelect = (religion: string) => {
-    setSelectedReligion(religion);
+  const toggleLowSalt = () => {
+    setIsLowSalt(!isLowSalt);
   };
 
-  // 질병 선택 함수
-  const handleDiseaseSelect = (disease: string) => {
-    if (selectedDiseases.includes(disease)) {
-      setSelectedDiseases(selectedDiseases.filter((item) => item !== disease));
-    } else {
-      setSelectedDiseases([...selectedDiseases, disease]);
-    }
+  const toggleDiabetes = () => {
+    setIsDiabetes(!isDiabetes);
   };
+
+  const toggleHBP = () => {
+    setIsHBP(!isHBP);
+  };
+
+  const toggleHyperlipidemia = () => {
+    setIsHyperlipidemia(!isHyperlipidemia);
+  };
+
+  useEffect(() => {
+    async function updateUserData() {
+      await pb.collection("users").update(pb.authStore.model?.id, {
+        isVegan: isVegetarian,
+        isHalal: isHalal,
+        isHindu: isHindu,
+        isLowSalt: isLowSalt,
+        isDiabetes: isDiabetes,
+        isHBP: isHBP,
+        isHyperlipidemia: isHyperlipidemia,
+      });
+    }
+    updateUserData();
+  }, [
+    isDiabetes,
+    isHBP,
+    isHalal,
+    isHindu,
+    isHyperlipidemia,
+    isLowSalt,
+    isVegetarian,
+  ]);
 
   useEffect(() => {
     if (!pb.authStore.isValid) {
       router.push("/auth/signin");
     }
+    async function getUserData() {
+      const userData = await pb
+        .collection("users")
+        .getOne(pb.authStore.model?.id);
+      setIsVegetarian(userData.isVegan);
+      setIsLowSalt(userData.isLowSalt);
+      setIsHindu(userData.isHindu);
+      setIsHalal(userData.isHalal);
+      setIsDiabetes(userData.isDaibetes);
+      setIsHBP(userData.isHBP);
+      setIsHyperlipidemia(userData.isHyperlipidemia);
+    }
+    getUserData();
   }, [router]);
 
   return (
@@ -102,30 +138,49 @@ export default function Profile(): ReactElement {
           <input
             type="checkbox"
             className="sr-only peer"
-            checked={isLowsalt}
-            onChange={toggleLowsalt}
+            checked={isLowSalt}
+            onChange={toggleLowSalt}
           />
           <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
         </label>
       </div>
 
       {/* 질병 선택 */}
-      <div className={"p-2 bg-white rounded-lg"}>
-        <legend>질병</legend>
-        <div className={"grid grid-cols-3"}>
-          {diseasesList.map((disease, index) => (
-            <div key={index}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={selectedDiseases.includes(disease)}
-                  onChange={() => handleDiseaseSelect(disease)}
-                />
-                {disease}
-              </label>
-            </div>
-          ))}
-        </div>
+      <div className={"p-2 bg-white rounded-xl flex justify-between"}>
+        <div className={"text-lg font-semibold"}>당뇨</div>
+        <label className="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isDiabetes}
+            onChange={toggleDiabetes}
+          />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
+      </div>
+      <div className={"p-2 bg-white rounded-xl flex justify-between"}>
+        <div className={"text-lg font-semibold"}>고혈압</div>
+        <label className="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isHBP}
+            onChange={toggleHBP}
+          />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
+      </div>
+      <div className={"p-2 bg-white rounded-xl flex justify-between"}>
+        <div className={"text-lg font-semibold"}>고지혈증</div>
+        <label className="inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isHyperlipidemia}
+            onChange={toggleHyperlipidemia}
+          />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
       </div>
     </div>
   );
