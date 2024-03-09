@@ -26,6 +26,7 @@ export default function Profile(): ReactElement {
     }
   };
 
+
   return (
     <div className="w-full h-screen grid justify-center">
       <div className="text-xl font-bold">프로필</div>
