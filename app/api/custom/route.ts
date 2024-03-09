@@ -17,10 +17,10 @@ export async function PUT(request: Request) {
       },
       {
         role: "user",
-        content: ` 나에 맞게 ${recipe?.foodName} 레시피를 다시 만들어줘. 레시피는 ${JSON.stringify({ recipe })}이야 나는 이런 사람이야: ${userInfo}`,
+        content: ` 나에 맞게 ${recipe?.foodName} 레시피를 다시 만들어줘. 레시피는 ${JSON.stringify({ recipe })}이야 나는 이런 사람이야: ${JSON.stringify({ userInfo })}`,
       },
     ],
-    model: "gpt-4-turbo-preview",
+    model: "gpt-3.5-turbo-0613",
   });
 
   return NextResponse.json({ result: customRecipe.choices[0].message.content });
