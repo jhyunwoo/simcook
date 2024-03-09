@@ -45,6 +45,7 @@ export default function SearchForm(): ReactElement {
           <MagnifyingGlassCircleIcon className={"size-10 text-rose-500"} />
         </button>
       </form>
+
       <div
         className={"flex flex-col space-y-1 items-center justify-center mt-4"}
       >
