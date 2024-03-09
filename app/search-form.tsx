@@ -4,6 +4,7 @@ import { ReactElement, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 import { pb } from "@/lib/pocketbase";
+import Link from "next/link";
 
 type Inputs = {
   cookName: string;
@@ -48,15 +49,16 @@ export default function SearchForm(): ReactElement {
         className={"flex flex-col space-y-1 items-center justify-center mt-4"}
       >
         {search.map((data) => (
-          <div
+          <Link
             key={data.id}
             className={
               "flex w-full justify-start flex-col bg-white p-2 rounded-lg"
             }
+            href={`/recipe/${data.id}`}
           >
             <div className={"text-lg"}>{data.foodName}</div>
             <div>난이도: {data.difficulty}</div>
-          </div>
+          </Link>
         ))}
       </div>
     </>
