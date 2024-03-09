@@ -12,10 +12,19 @@ export default function Recipe({
 }): ReactElement {
   const [recipe, setRecipe] = useState<any>();
   const [option, setOption] = useState<"basic" | "custom">("basic");
+  const [userData, setUserData] = useState<any>();
 
   function handleOption() {
     setOption(option === "basic" ? "custom" : "basic");
   }
+
+  useEffect(() => {
+    async function getUserData() {
+      const user = await pb.collection("users").getOne(pb.authStore.model?.id);
+      setUserData(user);
+    }
+    getUserData();
+  }, []);
 
   useEffect(() => {
     async function getCookRecipe() {
@@ -24,6 +33,23 @@ export default function Recipe({
     }
     getCookRecipe();
   }, [params.cookId]);
+
+  useEffect(() => {
+    async function getCustomRecipe() {
+      if (option === "custom") {
+        const requestRecipe = await fetch(`/api/custom`, {
+          method: "PUT",
+          body: JSON.stringify({
+            recipe: recipe,
+            userInfo: userData,
+          }),
+        });
+        const jsonRecipe = await requestRecipe.json();
+        console.log(jsonRecipe);
+      }
+    }
+    getCustomRecipe();
+  }, [option, recipe, recipe?.foodName, userData]);
 
   return (
     <div className={"w-full min-h-screen flex flex-col p-4"}>
@@ -65,8 +91,8 @@ export default function Recipe({
         ))}
       </div>
       <div>
-        {recipe?.recipe?.map((data: string, index: number) => (
-          <div key={index}>{data}</div>
+        {recipe?.recipe?.map((data: any, index: number) => (
+          <div key={index}>{data?.text}</div>
         ))}
       </div>
     </div>
