@@ -145,7 +145,6 @@ export default function Profile(): ReactElement {
         </label>
       </div>
 
-      {/* 질병 선택 */}
       <div className={"p-2 bg-white rounded-xl flex justify-between"}>
         <div className={"text-lg font-semibold"}>당뇨</div>
         <label className="inline-flex items-center cursor-pointer">
