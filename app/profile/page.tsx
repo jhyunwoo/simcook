@@ -5,6 +5,25 @@ import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { pb } from "@/lib/pocketbase";
 
+function StatusBar({
+  title,
+  percentage,
+}: {
+  title: String;
+  percentage: number;
+}) {
+  return (
+    <div>
+      <div>{title}</div>
+      <div className={"w-full h-8 rounded-xl bg-slate-200 relative"}>
+        <div
+          className={`absolute left-0 top-0 w-[${percentage}%] bg-red-500 z-10 h-8 rounded-xl`}
+        />
+      </div>
+    </div>
+  );
+}
+
 const diseasesList = ["당뇨", "고혈압", "고지혈증"];
 export default function Profile(): ReactElement {
   const [isVegetarian, setIsVegetarian] = useState(false);
@@ -92,6 +111,8 @@ export default function Profile(): ReactElement {
         <div className={"group-hover:underline"}>홈</div>
       </Link>
       <div className="text-2xl font-bold">프로필</div>
+
+      <StatusBar title={"총 섭취 칼로리"} percentage={21} />
       {/* 채식 */}
       <div className={"p-2 bg-white rounded-xl flex justify-between"}>
         <div className={"text-lg font-semibold"}>채식</div>
