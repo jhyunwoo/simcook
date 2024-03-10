@@ -22,10 +22,10 @@ export default function SignInButton(): ReactElement {
           router.refresh();
         }}
         className={
-          "bg-yellow-400 text-white font-semibold text-lg rounded-lg text-center w-full p-2 hover:bg-yellow-500 transition duration-150"
+          "bg-blue-400 text-white font-semibold text-lg rounded-lg text-center w-full p-2 hover:bg-blue-500 transition duration-150"
         }
       >
-        카카오로 로그인
+        구글로 로그인
       </button>
     </div>
   );
