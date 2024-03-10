@@ -79,6 +79,14 @@ export default function Recipe({
           커스텀
         </button>
       </div>
+      <Image
+        src={recipe?.recipe[recipe?.recipe?.length - 1]?.image}
+        alt={"Food Image"}
+        width={300}
+        height={300}
+        unoptimized={true}
+        className={"mx-auto rounded-xl shadow-lg"}
+      />
 
       <div className={"flex flex-row  p-2 bg-white rounded-xl"}>
         <div className="basis-1/3">난이도: {recipe?.difficulty}/5</div>
